@@ -1,0 +1,45 @@
+<!-- <p-card>
+    <div class="ui-inputgroup">
+        <label for="float-input">Username</label>
+        <input type="text" pInputText />
+      </div>
+</p-card> -->
+
+<p-toast></p-toast>
+
+<form [formGroup]="loginForm" (ngSubmit)="login()" name="form">
+
+<div class="login-panel ui-fluid">
+    <div class="ui-g">
+        <div class="ui-g-3 left-side">
+
+        </div>
+        <div class="ui-g-6 ui-sm-12 right-side">
+            <div class="ui-g-12 container">
+                <h1 class="centralizar">Cliente Manager</h1>
+            </div>
+            <div class="ui-g-12">
+                <label for="username" value="Username"></label>
+                <div class="input-wrapper">
+                    <input type="text" pInputText formControlName="username" autocomplete="off" placeholder="Username" class="ui-inputtext ui-widget">
+                    <i class="fa fa-user"></i>
+                </div>
+            </div>
+            <div class="ui-g-12">
+                <div class="input-wrapper">
+                    <input type="password" pPassword formControlName="password"  autocomplete="off" placeholder="password" class="ui-inputtext ui-widget">
+                    <i class="fa fa-lock"></i>
+                </div>
+            </div>
+            <div class="ui-g-12 button-container">
+                <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only blue-btn raised-btn">
+                    <span class="ui-button-text ui-c">Login</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+
