@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { environment } from './../../environments/environment';
 import * as AppUtils from '../shared/app.utils';
 
@@ -16,7 +17,8 @@ export class ApiService {
 
   public baseUrl: string;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+    private router: Router) {
 
     this.baseUrl = `${AppUtils.BASE_URL}` + 'api/users';
   }
@@ -59,6 +61,7 @@ export class ApiService {
         observer.next(true);
         observer.complete();
       } else {
+        this.router.navigate(['/login']);
         observer.next(false);
       }
     });

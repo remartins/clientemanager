@@ -121,6 +121,13 @@ export class AuthenticationService {
   private extractLoggedUser(accessToken): Observable<User> {
     if (accessToken) {
       const data = this.jwtHelper.decodeToken(accessToken);
+      var user = new User();
+      user.email = data.user_name;
+      user.role = data.authorities[0];
+
+      localStorage.setItem('currentUser', JSON.stringify(user));
+
+      return of(user);
       // console.log(data);
       // if (data) {
       //   return this.userService.findByEmail(data.user_name);
