@@ -1,2 +1,2 @@
 # clientemanager
-Cadastro de Cliente [Angular 6, SpringBoot, OAuth2]
+Cadastro de Cliente [Angular 7, SpringBoot, OAuth2]
