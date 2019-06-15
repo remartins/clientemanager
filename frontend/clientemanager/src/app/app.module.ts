@@ -11,13 +11,16 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { CardModule } from 'primeng/card';
-import {PanelModule} from 'primeng/panel';
-import {ButtonModule} from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { ButtonModule } from 'primeng/button';
+import { ToastModule } from 'primeng/toast';
+import {TableModule} from 'primeng/table';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ToastModule } from 'primeng/toast';
 import { TokenInterceptor } from './core/token.interceptor';
 import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/cliente-consulta.component';
+import { ClienteEditarComponent } from './components/cliente/cliente-editar/cliente-editar.component';
 
 
 
@@ -25,7 +28,8 @@ import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/
   declarations: [
     AppComponent,
     LoginComponent,
-    ClienteConsultaComponent
+    ClienteConsultaComponent,
+    ClienteEditarComponent
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,8 @@ import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/
     CardModule,
     PanelModule,
     ButtonModule,
+    TableModule,
+    DropdownModule,
     ToastModule,
     AppRoutingModule,
     ReactiveFormsModule,

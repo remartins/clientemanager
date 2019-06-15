@@ -13,7 +13,7 @@
       </div>
 
 
-      <div class="ui-md-3">
+      <div class="ui-md-12">
         <p-button label="consultar" (click)="consultar()" ></p-button>
         <p-button label="Incluir" style="margin-left: 15px;"></p-button>
       </div>
@@ -23,3 +23,25 @@
   </form>
 
 </p-panel>
+
+<br>
+<br>
+
+<p-table [value]="clientes">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>CPF</th>
+          <th>CEP</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-cliente>
+      <tr>
+          <td>{{cliente.id}}</td>
+          <td>{{cliente.nome}}</td>
+          <td>{{cliente.cpf}}</td>
+          <td>{{cliente.cep}}</td>
+      </tr>
+  </ng-template>
+</p-table>

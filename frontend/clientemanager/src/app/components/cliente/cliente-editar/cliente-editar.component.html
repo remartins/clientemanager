@@ -1,0 +1,24 @@
+<p-panel header="Clientes">
+
+  <form [formGroup]="formularioCliente"  name="form">
+
+      <div class="ui-md-3">
+          <label for="nome">Nome:</label>
+          <input id="nome" type="text" pInputText
+            formControlName="nome"
+            autocomplete="off"
+            class="ui-inputtext ui-widget">
+      </div>
+
+      <div class="ui-md-3">
+          <label for="cpf">Nome:</label>
+          <input id="cpf" type="text" pInputText
+            formControlName="cpf"
+            autocomplete="off"
+            class="ui-inputtext ui-widget">
+      </div>
+
+
+  </form>
+
+</p-panel>

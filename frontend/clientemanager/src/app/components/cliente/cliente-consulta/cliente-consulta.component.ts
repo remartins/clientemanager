@@ -1,3 +1,4 @@
+import { Cliente } from './../../../core/model/cliente';
 import { ClienteService } from './../../../core/cliente.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class ClienteConsultaComponent implements OnInit {
 
   formulario: FormGroup;
+  clientes: Cliente[];
 
   constructor(private clienteService: ClienteService) { }
 
@@ -21,6 +23,8 @@ export class ClienteConsultaComponent implements OnInit {
 
   consultar() {
     this.clienteService.consultarClientePorNome("").subscribe(res => {
+
+      this.clientes = res;
 
       // var result: any[] = res;
       // this.data.storage = { result: result, filtro: this.formulario.value };

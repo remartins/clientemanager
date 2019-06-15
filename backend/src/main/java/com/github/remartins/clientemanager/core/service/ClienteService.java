@@ -37,7 +37,10 @@ public class ClienteService {
 	
 	
 	public List<Cliente> consultarClientesPorNome(Optional<String> nome) {
-		return new ArrayList<>();
+		if (nome.isPresent()) {
+			return repository.findByNomeStartingWith(nome.get());
+		}
+		return repository.findAll();
 	}
 	
 	public void testeInsert() {
