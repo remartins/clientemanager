@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 
 
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
     private authentication: AuthenticationService,
     private router: Router,
     private messageService: MessageService
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -31,19 +31,19 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    //this.loadingSubject.next(true);
-    this.authentication.login(this.loginForm.value.username, this.loginForm.value.password)
-      .then(
-        () => {
-          //this.loadingSubject.next(false);
-          this.messageService.add({severity:'success', summary: 'Success Message', detail:'Order submitted'});
-          this.router.navigate(['/']);
-        },
-        error => {
-          //this.snackBar.open('Authentication failed.');
-          //this.loadingSubject.next(false);
-          this.messageService.add({severity:'error', summary: 'Error Message', detail:'Não foi possível realizar o login !'});
-        });
+
+    if (this.loginForm.valid) {
+
+      this.authentication.login(this.loginForm.value.username, this.loginForm.value.password)
+        .then(
+          () => {
+            this.messageService.add({ severity: 'success', summary: 'Success Message', detail: 'Order submitted' });
+            this.router.navigate(['cliente-consulta']);
+          },
+          error => {
+            this.messageService.add({ severity: 'error', summary: 'Error Message', detail: 'Não foi possível realizar o login !' });
+          });
+    }
   }
 
 }

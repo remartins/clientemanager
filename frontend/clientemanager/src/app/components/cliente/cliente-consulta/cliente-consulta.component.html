@@ -1,0 +1,25 @@
+<p-panel header="Clientes">
+
+  <form [formGroup]="formulario" (ngSubmit)="consultar()" name="form">
+
+    <div class="ui-md-12">
+
+      <div class="ui-md-3">
+        <label for="nome">Nome:</label>
+        <input id="nome" type="text" pInputText
+          formControlName="nome"
+          autocomplete="off"
+          class="ui-inputtext ui-widget">
+      </div>
+
+
+      <div class="ui-md-3">
+        <p-button label="consultar" (click)="consultar()" ></p-button>
+        <p-button label="Incluir" style="margin-left: 15px;"></p-button>
+      </div>
+
+    </div>
+
+  </form>
+
+</p-panel>

@@ -11,21 +11,28 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 
 import { CardModule } from 'primeng/card';
+import {PanelModule} from 'primeng/panel';
+import {ButtonModule} from 'primeng/button';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ToastModule } from 'primeng/toast';
 import { TokenInterceptor } from './core/token.interceptor';
+import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/cliente-consulta.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    ClienteConsultaComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CardModule,
+    PanelModule,
+    ButtonModule,
     ToastModule,
     AppRoutingModule,
     ReactiveFormsModule,

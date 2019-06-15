@@ -4,6 +4,8 @@
 package com.github.remartins.clientemanager.core.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -32,6 +34,11 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository repository;
+	
+	
+	public List<Cliente> consultarClientesPorNome(Optional<String> nome) {
+		return new ArrayList<>();
+	}
 	
 	public void testeInsert() {
 		Cliente cliente = new Cliente();
