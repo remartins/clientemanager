@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.envers.RevisionEntity;
@@ -24,7 +25,8 @@ import lombok.Data;
  * 15 de jun de 2019
  */
 @Data
-@Entity(name="AU_AUDITORIA")
+@Entity(name="AU_AUDITORIA" )
+@Table(name = "AU_AUDITORIA", schema = "SCM")
 @RevisionEntity(AuditListener.class)
 public class Auditoria implements Serializable {
 
