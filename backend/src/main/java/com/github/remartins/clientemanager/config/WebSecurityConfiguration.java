@@ -42,6 +42,5 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.withUser("comum").password(passwordEncoder().encode("123456")).roles("COMUM");
 		
     }
-
-
+    
 }

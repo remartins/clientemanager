@@ -16,6 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import lombok.Data;
 
 /**
@@ -23,6 +28,8 @@ import lombok.Data;
  * 15 de jun de 2019
  */
 @Data
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+@AuditTable(value = "AU_CLIENTE")
 @Entity
 @Table(name = "TB_CLIENTE", schema = "SCM")
 public class Cliente implements IEntidade<Long> {
@@ -58,10 +65,12 @@ public class Cliente implements IEntidade<Long> {
 	@Column(name = "COMPLEMENTO", length = 200)
 	private String complemento;
 	
+	@NotAudited
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_CLIENTE")
 	private List<Telefone> telefones;
 	
+	@NotAudited
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_CLIENTE")
 	private List<Email> emails;

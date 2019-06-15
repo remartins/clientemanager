@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.envers.AuditTable;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import lombok.Data;
 
 /**
@@ -17,6 +21,8 @@ import lombok.Data;
  * 15 de jun de 2019
  */
 @Data
+@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+@AuditTable(value = "AU_EMAIL")
 @Entity
 @Table(name = "TB_EMAIL", schema = "SCM")
 public class Email implements IEntidade<Long> {
