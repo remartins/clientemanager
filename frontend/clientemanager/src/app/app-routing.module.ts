@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/cliente-consulta.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'cliente-consulta', component: ClienteConsultaComponent },
+  { path: 'cliente-consulta', component: ClienteConsultaComponent,  canActivate: [AuthGuard], canActivateChild: [AuthGuard] },
 ];
 
 @NgModule({

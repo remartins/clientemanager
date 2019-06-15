@@ -53,16 +53,16 @@ export class ApiService {
 
   //   }
 
-  // isAuthenticated(): Observable<boolean> {
-  //   return new Observable<boolean> (observer => {
-  //     if (JSON.parse(localStorage.getItem('currentUser'))) {
-  //       observer.next(true);
-  //       observer.complete();
-  //     } else {
-  //       observer.next(false);
-  //     }
-  //   });
-  // }
+  isAuthenticated(): Observable<boolean> {
+    return new Observable<boolean> (observer => {
+      if (JSON.parse(localStorage.getItem('currentUser'))) {
+        observer.next(true);
+        observer.complete();
+      } else {
+        observer.next(false);
+      }
+    });
+  }
   // registerUser(user: UserDTO): Observable<any> {
   //   return this.httpClient.post<any>(AppUtils.REGISTER_URL, user, {headers: AppUtils.HEADERS_COMMUN});
   // }
