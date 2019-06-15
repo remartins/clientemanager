@@ -1,9 +1,9 @@
 import { ApiService } from './../api.service';
-import { map, take } from 'rxjs/operators';
-import { AuthenticationService } from './../authentication.service';
-import { Role, User } from './../model/user';
+import { take } from 'rxjs/operators';
+
+
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivate, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,10 +12,9 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(
-    private apiService: ApiService,
-    private router: Router) {
+    private apiService: ApiService) {
 
-      console.log('init guard');
+    console.log('init guard');
   }
 
   canActivate(

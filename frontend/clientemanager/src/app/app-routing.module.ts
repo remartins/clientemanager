@@ -1,3 +1,4 @@
+import { ClienteEditarComponent } from './components/cliente/cliente-editar/cliente-editar.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -10,7 +11,7 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
   { path: 'cliente-consulta', component: ClienteConsultaComponent,  canActivate: [AuthGuard], canLoad: [AuthGuard] },
-  { path: 'cliente-editar', component: ClienteConsultaComponent,  canActivate: [AuthGuard], canLoad: [AuthGuard] },
+  { path: 'cliente-editar', component: ClienteEditarComponent,  canActivate: [AuthGuard], canLoad: [AuthGuard] },
 ];
 
 @NgModule({

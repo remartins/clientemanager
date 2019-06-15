@@ -1,6 +1,6 @@
 <p-panel header="Clientes">
 
-  <form [formGroup]="formulario" (ngSubmit)="consultar()" name="form">
+  <form [formGroup]="formulario" name="form">
 
     <div class="ui-md-12">
 
@@ -15,7 +15,7 @@
 
       <div class="ui-md-12">
         <p-button label="consultar" (click)="consultar()" ></p-button>
-        <p-button label="Incluir" style="margin-left: 15px;"></p-button>
+        <button pButton type="button" label="Incluir" (click)="incluir()" style="margin-left: 15px;"></button>
       </div>
 
     </div>

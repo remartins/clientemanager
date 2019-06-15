@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Cliente } from './../../../core/model/cliente';
 import { ClienteService } from './../../../core/cliente.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
@@ -13,7 +14,9 @@ export class ClienteConsultaComponent implements OnInit {
   formulario: FormGroup;
   clientes: Cliente[];
 
-  constructor(private clienteService: ClienteService) { }
+  constructor(
+    private clienteService: ClienteService,
+    private router: Router) { }
 
   ngOnInit() {
     this.formulario = new FormGroup({
@@ -31,6 +34,10 @@ export class ClienteConsultaComponent implements OnInit {
       // this.router.navigateByUrl('/manutencao/parametros/email/busca');
 
     }, err => {})
+  }
+
+  incluir() {
+    this.router.navigate(['cliente-editar']);
   }
 
 }
