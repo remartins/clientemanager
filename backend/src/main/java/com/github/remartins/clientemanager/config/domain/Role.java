@@ -1,3 +1,4 @@
+
 package com.github.remartins.clientemanager.config.domain;
 
 import java.io.Serializable;
@@ -5,7 +6,7 @@ import java.io.Serializable;
 import org.springframework.security.core.GrantedAuthority;
 
 public class Role implements Serializable, GrantedAuthority {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	private String id;

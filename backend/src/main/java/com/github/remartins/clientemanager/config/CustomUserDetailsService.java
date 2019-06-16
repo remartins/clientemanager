@@ -19,12 +19,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        Optional<User> user = userRepository.findByEmail(email);
-//        if (!user.isPresent()) {
-//            throw new UsernameNotFoundException(String.format("UserNotExist"));
-//        } else if (!user.get().isEnabled()) {
-//            throw new ObjectNotEnabledException(String.format("UserNotEnabled"));
-//        }
 		User user = new User();
 		user.setEmail(email);
 		return new UserRepositoryUserDetails(user);
@@ -82,3 +76,4 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 
 }
+
