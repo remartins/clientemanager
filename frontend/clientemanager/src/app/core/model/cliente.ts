@@ -1,3 +1,7 @@
+import { Email } from './email';
+import { Telefone } from './telefone';
+
+
 export class Cliente {
 
 	id: number;
@@ -9,5 +13,9 @@ export class Cliente {
   cidade: string;
   uf: string;
   complemento: string;
+
+  telefones: Telefone[] = [];
+  public emails: Email[] = [];
+
 
 }

@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <p-panel header="Clientes">
 
   <form [formGroup]="formularioCliente" name="form">
@@ -6,54 +8,174 @@
 
       <span>
         <label for="nome">Nome:</label>
-        <input id="nome" type="text" pInputText formControlName="nome" autocomplete="off"
-          class="ui-inputtext ui-widget">
+        <input id="nome" type="text" pInputText formControlName="nome" autocomplete="off" class="ui-inputtext ui-widget"
+          maxlength="100">
+          <app-field-message-error [control]="formularioCliente.controls['nome']" type="required"
+            errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
       <span>
         <label for="cpf">CPF:</label>
-        <input id="cpf" type="text" pInputText formControlName="cpf" autocomplete="off" class="ui-inputtext ui-widget">
+        <input id="cpf" type="text" pInputText formControlName="cpf" autocomplete="off" class="ui-inputtext ui-widget"
+          [textMask]="{mask: maskCpf}" placeholder="000.000.000-00">
+          <app-field-message-error [control]="formularioCliente.controls['cpf']" type="required"
+            errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
       <span>
         <label for="cep">CEP:</label>
-        <input id="cep" type="text" pInputText formControlName="cep" autocomplete="off" class="ui-inputtext ui-widget">
+        <input id="cep" type="text" pInputText formControlName="cep" autocomplete="off" class="ui-inputtext ui-widget"
+          [textMask]="{mask: maskCep}" placeholder="00000-000" (input)=consultarCep()>
+          <app-field-message-error [control]="formularioCliente.controls['cep']" type="required"
+          errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
       <span>
         <label for="logradouro">Logradouro:</label>
         <input id="logradouro" type="text" pInputText formControlName="logradouro" autocomplete="off"
-          class="ui-inputtext ui-widget">
+          class="ui-inputtext ui-widget" maxlength="150">
+          <app-field-message-error [control]="formularioCliente.controls['logradouro']" type="required"
+          errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
       <span>
         <label for="bairro">Bairro:</label>
         <input id="bairro" type="text" pInputText formControlName="bairro" autocomplete="off"
-          class="ui-inputtext ui-widget">
+          class="ui-inputtext ui-widget" maxlength="100">
+          <app-field-message-error [control]="formularioCliente.controls['bairro']" type="required"
+          errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
 
       <span>
         <label for="cidade">Cidade:</label>
         <input id="cidade" type="text" pInputText formControlName="cidade" autocomplete="off"
-          class="ui-inputtext ui-widget">
+          class="ui-inputtext ui-widget" maxlength="100">
+          <app-field-message-error [control]="formularioCliente.controls['cidade']" type="required"
+          errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
 
       <span>
         <label for="uf">UF:</label>
-        <input id="uf" type="text" pInputText formControlName="uf" autocomplete="off" class="ui-inputtext ui-widget">
+        <input id="uf" type="text" pInputText formControlName="uf" autocomplete="off" class="ui-inputtext ui-widget"
+          maxlength="2">
+          <app-field-message-error [control]="formularioCliente.controls['uf']" type="required"
+          errorMessage="Campo obrigat&oacute;rio"></app-field-message-error>
       </span>
-
 
       <span>
-        <label for="complemento">UF:</label>
+        <label for="complemento">Complemento:</label>
         <input id="complemento" type="text" pInputText formControlName="complemento" autocomplete="off"
-          class="ui-inputtext ui-widget">
+          class="ui-inputtext ui-widget" maxlength="200">
       </span>
-
     </div>
 
-
   </form>
+
+  <form [formGroup]="formularioTelefone" name="form">
+    <p-panel header="Telefone">
+      <div class="row-grid">
+
+        <span>
+          <label for="tipoTelefone">Tipo:</label>
+          <p-dropdown id="tipoTelefone" [options]="tiposTelefone" formControlName="tipo" placeholder="Selecione"
+            (onChange)=onChangeTipoTelefone($event)></p-dropdown>
+
+          <app-field-message-error [control]="formularioTelefone.controls['tipo']" type="required"
+            errorMessage="Informe um tipo"></app-field-message-error>
+        </span>
+
+
+        <span>
+          <label for="telefone">Telefone:</label>
+          <input id="telefone" type="text" pInputText formControlName="numero" autocomplete="off"
+            class="ui-inputtext ui-widget" maxlength="100" [textMask]="maskTel" [placeholder]="placeholderTel">
+          <app-field-message-error [control]="formularioTelefone.controls['tipo']" type="required"
+            errorMessage="Informe o telefone"></app-field-message-error>
+        </span>
+        <span>
+          <label>&nbsp;</label>
+          <button id="btnAdicionarTelefone" pButton type="button" label="Adicionar"
+            (click)="adicionarTelefone()"></button>
+        </span>
+      </div>
+
+      <p-table [value]="telefones">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Tipo</th>
+            <th>Telefone</th>
+            <th>A&ccedil;&otilde;es</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-telefone>
+          <tr>
+            <td>{{telefone.tipo | tipoTelefone}}</td>
+            <td>{{telefone.numero | telefone}}</td>
+            <td>
+              <button type="button" pButton icon="pi pi-trash" title="Remover"
+                (click)="removerTelefone(telefone)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </form>
+
+  <br>
+  <br>
+
+
+  <form [formGroup]="formularioEmail" name="form">
+    <p-panel header="Email">
+      <div class="row-grid">
+        <span>
+          <label for="enderecoEmail">Endere&ccedil;o E-mail:</label>
+          <input id="enderecoEmail" type="text" pInputText formControlName="endereco" autocomplete="off"
+            class="ui-inputtext ui-widget" maxlength="100">
+          <app-field-message-error [control]="formularioEmail.controls['endereco']" type="required"
+            errorMessage="Informe o endere&ccedil;o"></app-field-message-error>
+            <app-field-message-error [control]="formularioEmail.controls['endereco']" type="email"
+            errorMessage="Informe um e-mail válido"></app-field-message-error>
+        </span>
+        <span>
+          <label>&nbsp;</label>
+          <button id="btnAdicionarEmail" pButton type="button" label="Adicionar"
+            (click)="adicionarEmail()"></button>
+        </span>
+      </div>
+
+      <p-table [value]="emails">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Endereço E-mail</th>
+            <th>A&ccedil;&otilde;es</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-email>
+          <tr>
+            <td>{{email.endereco}}</td>
+            <td>
+              <button type="button" pButton icon="pi pi-trash" title="Remover"
+                (click)="removerEmail(email)"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </p-panel>
+  </form>
+
+
+  <br>
+  <br>
+
+  <div class="row-grid">
+    <button pButton type="button" label="Salvar" (click)="salvar()"></button>
+    <button pButton type="button" label="Incluir" (click)="incluir()"></button>
+  </div>
+
+
+
 
 </p-panel>

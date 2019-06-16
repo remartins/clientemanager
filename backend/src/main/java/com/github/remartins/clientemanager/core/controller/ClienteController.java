@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,6 +50,13 @@ public class ClienteController {
     @GetMapping(value="/consultar-nome/")
     public ResponseEntity<List<Cliente>> consultarClientesPorNome(){
 		return ResponseEntity.ok().body(service.consultarClientesPorNome(Optional.empty()));
+    }
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Cliente> consultarClientesPorNome(@RequestBody Cliente cliente){
+		service.incluir(cliente);
+		return ResponseEntity.ok().body(cliente);
     }
 
 }

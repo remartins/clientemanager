@@ -15,6 +15,6 @@ import com.github.remartins.clientemanager.core.model.Cliente;
  */
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 	
-	 List<Cliente> findByNomeStartingWith(String nome);
+	 List<Cliente> findByNomeStartingWithIgnoreCase(String nome);
 
 }

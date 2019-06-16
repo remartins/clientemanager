@@ -1,5 +1,5 @@
 import { ConfigService, configServiceInitializerFactory } from './core/config.service';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,13 +14,23 @@ import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
+
+import { TextMaskModule } from 'angular2-text-mask';
+
+
 import { TokenInterceptor } from './core/token.interceptor';
+
 import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/cliente-consulta.component';
 import { ClienteEditarComponent } from './components/cliente/cliente-editar/cliente-editar.component';
+import { TipoTelefonePipe } from './core/pipes/tipo-telefone.pipe';
+import { TelefonePipe } from './core/pipes/telefone.pipe';
+import { FieldMessageErrorComponent } from './components/field-message-error/field-message-error.component';
+
+
 
 
 
@@ -29,7 +39,10 @@ import { ClienteEditarComponent } from './components/cliente/cliente-editar/clie
     AppComponent,
     LoginComponent,
     ClienteConsultaComponent,
-    ClienteEditarComponent
+    ClienteEditarComponent,
+    TipoTelefonePipe,
+    TelefonePipe,
+    FieldMessageErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +56,12 @@ import { ClienteEditarComponent } from './components/cliente/cliente-editar/clie
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TextMaskModule
+  ],
+  exports: [
+    TipoTelefonePipe,
+    TelefonePipe
   ],
   providers: [
     ConfigService, {
@@ -54,6 +72,9 @@ import { ClienteEditarComponent } from './components/cliente/cliente-editar/clie
     },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+		CUSTOM_ELEMENTS_SCHEMA
+	]
 })
 export class AppModule { }

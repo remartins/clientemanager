@@ -1,4 +1,3 @@
-import { Cliente } from './model/cliente';
 
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -18,10 +17,10 @@ import { environment } from 'src/environments/environment';
 
 
 @Injectable({ providedIn: 'root' })
-export class ClienteService {
+export class CepService {
 
 
-  private url: string = environment.serverUrl + "clientes/";
+  private url: string = "http://viacep.com.br/ws/";
 
 
   constructor(
@@ -32,16 +31,10 @@ export class ClienteService {
 
   }
 
-  public consultarClientePorNome(nome?: string): Observable<any> {
+  public consultarCep(cep: string): Observable<any> {
 
-    let httpParams: HttpParams = new HttpParams().set('nome', nome);
+    return this.http.get(this.url + cep + "/json");
 
-    return this.http.get(this.url + "consultar-nome/" + nome, this.options());
-
-  }
-
-  public incluir(cliente: Cliente): Observable<any> {
-    return this.http.post(this.url, cliente, this.options());
   }
 
 

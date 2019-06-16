@@ -7,10 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.remartins.clientemanager.core.enums.TipoTelefone;
 import com.github.remartins.clientemanager.core.model.Cliente;
@@ -38,9 +40,14 @@ public class ClienteService {
 	
 	public List<Cliente> consultarClientesPorNome(Optional<String> nome) {
 		if (nome.isPresent()) {
-			return repository.findByNomeStartingWith(nome.get());
+			return repository.findByNomeStartingWithIgnoreCase(nome.get());
 		}
 		return repository.findAll();
+	}
+	
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void incluir(Cliente cliente) {
+		repository.save(cliente);
 	}
 	
 	public void testeInsert() {
