@@ -1,25 +1,34 @@
+import { BaseComponent } from './../../../core/base.component';
 import { Router } from '@angular/router';
 import { Cliente } from './../../../core/model/cliente';
 import { ClienteService } from './../../../core/cliente.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {ConfirmationService} from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { TransferObject } from 'src/app/core/trasfer-object';
 
 @Component({
   selector: 'app-cliente-consulta',
   templateUrl: './cliente-consulta.component.html',
   styleUrls: ['./cliente-consulta.component.scss'],
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, MessageService]
 })
-export class ClienteConsultaComponent implements OnInit {
+export class ClienteConsultaComponent extends BaseComponent implements OnInit {
 
   formulario: FormGroup;
   clientes: Cliente[];
 
   constructor(
+    protected messageService: MessageService,
     private clienteService: ClienteService,
     private confirmationService: ConfirmationService,
-    private router: Router) { }
+    private router: Router,
+    private transferObject:TransferObject) {
+
+    super(messageService);
+  }
+
+
 
   ngOnInit() {
     this.formulario = new FormGroup({
@@ -32,13 +41,13 @@ export class ClienteConsultaComponent implements OnInit {
   consultarTodos() {
     this.clienteService.consultarTodos().subscribe(res => {
       this.clientes = res;
-    }, err => {});
+    }, err => { });
   }
 
   consultar() {
     this.clienteService.consultarClientePorNome(this.formulario.controls['nome'].value).subscribe(res => {
       this.clientes = res;
-    }, err => {});
+    }, err => { });
   }
 
   incluir() {
@@ -53,15 +62,20 @@ export class ClienteConsultaComponent implements OnInit {
       acceptLabel: "Sim",
       rejectLabel: "Não",
       accept: () => {
-          this.clienteService.excluir(cliente.id).subscribe(res => {
-              this.clientes = res;
-            }, err => {});
+        this.clienteService.excluir(cliente.id).subscribe(res => {
+          this.removerItemLista(cliente, this.clientes);
+          this.showMessageSucess("Registro excluído com sucesso");
+        }, err => {
+          this.showMessageError("Erro ao excluir o registro");
+        });
       }
     });
+  }
 
-    // this.clienteService.consultarClientePorNome(this.formulario.controls['nome'].value).subscribe(res => {
-    //   this.clientes = res;
-    // }, err => {});
+  public editar(cliente: Cliente) {
+    this.transferObject.storage = {acao: 'editar', cliente: cliente};
+    //this.transferObject.storage = cliente;
+    this.router.navigate(['cliente-editar']);
   }
 
 }

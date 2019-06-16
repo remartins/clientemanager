@@ -90,8 +90,10 @@
           <label for="telefone">Telefone:</label>
           <input id="telefone" type="text" pInputText formControlName="numero" autocomplete="off"
             class="ui-inputtext ui-widget" maxlength="100" [textMask]="maskTel" [placeholder]="placeholderTel">
-          <app-field-message-error [control]="formularioTelefone.controls['tipo']" type="required"
+          <app-field-message-error [control]="formularioTelefone.controls['numero']" type="required"
             errorMessage="Informe o telefone"></app-field-message-error>
+            <app-field-message-error [control]="formularioTelefone.controls['numero']" type="telefone"
+            errorMessage="Informe o telefone comforme a máscara"></app-field-message-error>
         </span>
         <span>
           <label>&nbsp;</label>

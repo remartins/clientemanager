@@ -9,7 +9,10 @@ export class BaseComponent {
   constructor(protected messageService: MessageService) {
   }
 
-  toNumber(value: string): number {
+  toNumber(value: any): number {
+    if (isNumber(value)) {
+      return value;
+    }
     return Number.parseInt(this.toNumberString(value))
   }
 
@@ -91,5 +94,10 @@ export class BaseComponent {
     this.messageService.add({severity:'success', summary: 'Sucesso', detail: mensagem});
   }
 
+  protected removerItemLista(item:any, lista:any[]) {
+
+    let index = lista.indexOf( item );
+    lista.splice(index, 1);
+  }
 
 }

@@ -5,12 +5,14 @@ import { BaseComponent } from './../../../core/base.component';
 import { Telefone } from './../../../core/model/telefone';
 import { MessageService } from 'primeng/api';
 import { CepService } from './../../../core/cep.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TipoTelefonePipe } from 'src/app/core/pipes/tipo-telefone.pipe';
 import { TipoTelefone } from 'src/app/core/model/tipoTelefone';
 
 import { Router } from '@angular/router';
+import { TransferObject } from 'src/app/core/trasfer-object';
+
 
 
 @Component({
@@ -52,7 +54,9 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
     protected messageService: MessageService,
     private cepService: CepService,
     private clienteService: ClienteService,
-    private router: Router) {
+    private router: Router,
+    private transferObject:TransferObject) {
+
       super(messageService);
     }
 
@@ -75,12 +79,32 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
     this.formularioTelefone = new FormGroup({
       tipo: new FormControl('', Validators.required),
-      numero: new FormControl('', Validators.required),
+      numero: new FormControl('', [Validators.required, ClienteEditarComponent.validarTelefone]),
     });
 
     this.formularioEmail = new FormGroup({
       endereco: new FormControl('', [Validators.required, Validators.email])
     });
+
+
+    if (this.transferObject.storage) {
+      if (this.transferObject.storage.acao && this.transferObject.storage.acao == 'editar') {
+        var cliente: Cliente = this.transferObject.storage.cliente;
+        this.formularioCliente.controls['id'].setValue(cliente.id);
+        this.formularioCliente.controls['nome'].setValue(cliente.nome);
+        this.formularioCliente.controls['cpf'].setValue(cliente.cpf);
+        this.formularioCliente.controls['cep'].setValue(cliente.cep);
+        this.formularioCliente.controls['logradouro'].setValue(cliente.logradouro);
+        this.formularioCliente.controls['bairro'].setValue(cliente.bairro);
+        this.formularioCliente.controls['cidade'].setValue(cliente.cidade);
+        this.formularioCliente.controls['uf'].setValue(cliente.uf);
+        this.formularioCliente.controls['complemento'].setValue(cliente.complemento);
+
+        this.emails = cliente.emails;
+        this.telefones = cliente.telefones;
+      }
+    }
+
   }
 
   consultarCep() {
@@ -181,6 +205,7 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
       this.clienteService.incluir(cliente).subscribe(res => {
 
         this.messageService.add({severity:'success', summary: 'Sucesso', detail:'Registro incluído com sucesso'});
+        this.limparFormulario();
 
       }, err => {
         this.messageService.add({severity:'error', summary: 'Erro', detail:'Erro ao incluir'});
@@ -193,6 +218,34 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
   public voltar(): void {
     this.router.navigate(['/cliente-consulta']);
+  }
+
+  private limparFormulario() {
+    this.limparCampos(this.formularioCliente);
+    this.limparCampos(this.formularioEmail);
+    this.limparCampos(this.formularioTelefone);
+    this.emails = [];
+    this.telefones = [];
+  }
+
+  static validarTelefone(control: AbstractControl) {
+
+    if (control.value) {
+
+      var telefoneMask: string = control.value;
+
+      if (telefoneMask.length == 14 && telefoneMask.replace(/\D/g, '').length == 10) {
+        return null;
+      }
+      if (telefoneMask.length == 15 && telefoneMask.replace(/\D/g, '').length == 11) {
+        return null;
+      }
+      console.log(control.value);
+
+    }
+
+    return { telefone: true };
+
   }
 
 }

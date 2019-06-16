@@ -17,6 +17,8 @@ import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {MenubarModule} from 'primeng/menubar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -30,6 +32,8 @@ import { ClienteEditarComponent } from './components/cliente/cliente-editar/clie
 import { TipoTelefonePipe } from './core/pipes/tipo-telefone.pipe';
 import { TelefonePipe } from './core/pipes/telefone.pipe';
 import { FieldMessageErrorComponent } from './components/field-message-error/field-message-error.component';
+import { TransferObject } from './core/trasfer-object';
+import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
 
 
 
@@ -43,7 +47,8 @@ import { FieldMessageErrorComponent } from './components/field-message-error/fie
     ClienteEditarComponent,
     TipoTelefonePipe,
     TelefonePipe,
-    FieldMessageErrorComponent
+    FieldMessageErrorComponent,
+    CabecalhoComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,7 @@ import { FieldMessageErrorComponent } from './components/field-message-error/fie
     TableModule,
     DropdownModule,
     ConfirmDialogModule,
+    MenubarModule,
     ToastModule,
     AppRoutingModule,
     ReactiveFormsModule,
@@ -72,7 +78,8 @@ import { FieldMessageErrorComponent } from './components/field-message-error/fie
       deps: [ConfigService],
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    TransferObject
   ],
   bootstrap: [AppComponent],
   schemas: [
