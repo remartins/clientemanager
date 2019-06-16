@@ -17,11 +17,11 @@ import { ConfigService } from './config.service';
 export class ApiService {
   public baseUrl: string;
 
-  constructor(private httpClient: HttpClient, private config: ConfigService) {
+  constructor(private httpClient: HttpClient, private config: ConfigService, private router: Router) {
     this.baseUrl = `${AppUtils.BASE_URL}` + 'api/users';
   }
 
-    // private loadAccessToken(retrieveAccessToken: boolean, refreshToken?: string, username?: string, password?: string):
+  // private loadAccessToken(retrieveAccessToken: boolean, refreshToken?: string, username?: string, password?: string):
   //   Observable<string> {
   //   console.log(retrieveAccessToken ? 'login' : 'refresh_token');
   //   const params = retrieveAccessToken ?
@@ -84,7 +84,8 @@ export class ApiService {
         observer.next(true);
         observer.complete();
       } else {
-        observer.next(false);
+        //observer.next(false);
+        this.router.navigate(['login']);
       }
     });
   }
@@ -135,7 +136,13 @@ export class ApiService {
   // }
 
   logout(): Observable<any> {
-    //localStorage.clear();
-    return this.httpClient.post<any>(`${AppUtils.BASE_URL}` + 'logout',null, AppUtils.OPTIONS_OBJECTO);
+
+    var headersToken = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken')
+    });
+
+    localStorage.clear();
+
+    return this.httpClient.post<any>(`${AppUtils.BASE_URL}` + 'logout', null, { headers: headersToken });
   }
 }

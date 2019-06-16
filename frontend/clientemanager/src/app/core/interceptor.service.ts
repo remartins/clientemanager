@@ -36,7 +36,7 @@ export class InterceptorService implements HttpInterceptor {
         return event;
       }),
       catchError((error => {
-        debugger;
+
         if (error instanceof HttpErrorResponse) {
           switch (error.status) {
             case 409:

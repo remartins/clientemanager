@@ -18,9 +18,7 @@ export class CabecalhoComponent implements OnInit {
 
   logout() {
     this.apiService.logout().subscribe(res => {
-
       console.log("logout");
-
     }, err => {
       console.log(err);
     });
