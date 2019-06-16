@@ -6,8 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, empty, Observable, of, Subject, EMPTY, throwError } from 'rxjs';
 import { catchError, filter, map, skipWhile, switchMap, tap } from 'rxjs/operators';
 
-import { User, Role } from './model/user';
-import { TokenInterceptor } from './token.interceptor';
+
 
 import { ConfigService } from './config.service';
 import { environment } from 'src/environments/environment';

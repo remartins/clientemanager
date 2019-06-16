@@ -6,101 +6,124 @@ import * as AppUtils from '../shared/app.utils';
 import { Observable } from 'rxjs';
 
 import { Injectable } from '@angular/core';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Login } from './model/login';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
   public baseUrl: string;
 
-  constructor(private httpClient: HttpClient,
-    private router: Router) {
-
+  constructor(private httpClient: HttpClient, private config: ConfigService) {
     this.baseUrl = `${AppUtils.BASE_URL}` + 'api/users';
   }
 
-  login(userLogin: Login): Observable <any> {
+    // private loadAccessToken(retrieveAccessToken: boolean, refreshToken?: string, username?: string, password?: string):
+  //   Observable<string> {
+  //   console.log(retrieveAccessToken ? 'login' : 'refresh_token');
+  //   const params = retrieveAccessToken ?
+  //     new HttpParams()
+  //       .set('username', username)
+  //       .set('password', password)
+  //       .set('grant_type', 'password') :
+  //     new HttpParams()
+  //       .set(refreshTokenKey, refreshToken)
+  //       .set('grant_type', refreshTokenKey);
+  //   return this.http.post<any>(this.config.config.loginUrl, params,
+  //     {
+  //       headers: new HttpHeaders().append('Authorization',
+  //         'Basic ' + btoa(`${this.config.config.clientId}:${this.config.config.clientSecret}`)),
+  //     }
+  //   )
+  // }
+
+  login(username: string, password: string): Observable<any> {
 
     const params = new HttpParams()
-      .set('username', userLogin.username)
-      .set('password', userLogin.password)
+      .set('username', username)
+      .set('password', password)
       .set('grant_type', 'password');
 
     const options = {
-        headers: AppUtils.HEADERS_COMMUN,
-        params
-      };
-    return this.httpClient.post(AppUtils.URL_TOKEN, null, options);
+      headers: AppUtils.HEADERS_COMMUN,
+      params
+    };
+    //return this.httpClient.post(AppUtils.URL_TOKEN, params, options);
+
+    return this.httpClient.post<any>(this.config.config.loginUrl, params,
+      {
+        headers: new HttpHeaders().append('Authorization',
+          'Basic ' + btoa(`${this.config.config.clientId}:${this.config.config.clientSecret}`)),
+      });
   }
 
-  // getMainUser(token: any): Observable <any> {
-  //   return this.httpClient.get<any>(`${this.baseUrl}` + '/main', AppUtils.OPTIONS_OBJECTO);
-  // }
+  getMainUser(token: any): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}` + '/main', AppUtils.OPTIONS_OBJECTO);
+  }
 
-  // getAccessToken(refreshToken): Observable<any>  {
+  getAccessToken(refreshToken): Observable<any> {
 
-  //   const params = new HttpParams()
-  //   .set('grant_type', 'refresh_token')
-  //   .set('refresh_token', refreshToken);
+    const params = new HttpParams()
+      .set('grant_type', 'refresh_token')
+      .set('refresh_token', refreshToken);
 
-  //   const options = {
-  //     headers: AppUtils.HEADERS_COMMUN,
-  //       params
-  //     };
-  //   return this.httpClient.post(AppUtils.URL_TOKEN, null,  options);
+    const options = {
+      headers: AppUtils.HEADERS_COMMUN,
+      params
+    };
+    return this.httpClient.post(AppUtils.URL_TOKEN, null, options);
 
-  //   }
+  }
 
   isAuthenticated(): Observable<boolean> {
-    return new Observable<boolean> (observer => {
+    return new Observable<boolean>(observer => {
       if (JSON.parse(localStorage.getItem('currentUser'))) {
         observer.next(true);
         observer.complete();
       } else {
-        this.router.navigate(['/login']);
         observer.next(false);
       }
     });
   }
   // registerUser(user: UserDTO): Observable<any> {
-  //   return this.httpClient.post<any>(AppUtils.REGISTER_URL, user, {headers: AppUtils.HEADERS_COMMUN});
+  //   return this.httpClient.post<any>(AppUtils.REGISTER_URL, user, { headers: AppUtils.HEADERS_COMMUN });
   // }
-  // confirmationRegisterToken(token: string): Observable<any> {
-  //   const params = new HttpParams()
-  //     .set('token', token);
-  //   const options = {
-  //       headers: AppUtils.HEADERS_COMMUN,
-  //       params
-  //     };
-  //   return this.httpClient.get<any>(AppUtils.CONFIRM_REGISTER_URL, options);
-  // }
+  confirmationRegisterToken(token: string): Observable<any> {
+    const params = new HttpParams()
+      .set('token', token);
+    const options = {
+      headers: AppUtils.HEADERS_COMMUN,
+      params
+    };
+    return this.httpClient.get<any>(AppUtils.CONFIRM_REGISTER_URL, options);
+  }
   // resendRegisterToken(user: UserDTO): Observable<any> {
   //   const params = new HttpParams()
   //     .set('email', user.email);
   //   const options = {
-  //       headers: AppUtils.HEADERS_COMMUN,
-  //       params
-  //     };
+  //     headers: AppUtils.HEADERS_COMMUN,
+  //     params
+  //   };
   //   return this.httpClient.get<any>(AppUtils.RESEND_REGISTER_TOKEN_URL, options);
   // }
-  // getUsers(): Observable<any> {
-  //   return this.httpClient.get<any>(`${this.baseUrl}`, AppUtils.OPTIONS_OBJECTO);
-  // }
-  // getRole(roles: Array<any>) {
-  //   let role: any;
-  //   if (this.isAuthenticated() && roles) {
-  //     if (roles.length > 0) {
-  //       roles.forEach(r => {
-  //         role = r.name;
-  //       });
-  //     }
-  //     return role;
-  //   }
-  // }
+  getUsers(): Observable<any> {
+    return this.httpClient.get<any>(`${this.baseUrl}`, AppUtils.OPTIONS_OBJECTO);
+  }
+  getRole(roles: Array<any>) {
+    let role: any;
+    if (this.isAuthenticated() && roles) {
+      if (roles.length > 0) {
+        roles.forEach(r => {
+          role = r.name;
+        });
+      }
+      return role;
+    }
+  }
+
   // deleteUser(id: string): Observable<any> {
   //   return this.httpClient.delete<any>(`${this.baseUrl}/${id}}`, AppUtils.OPTIONS_OBJECTO);
   // }
@@ -109,8 +132,9 @@ export class ApiService {
   // }
   // updateUser(user: UserDTO): Observable<any> {
   //   return this.httpClient.put<any>(`${this.baseUrl}/${user.id}`, user, AppUtils.OPTIONS_OBJECTO);
-  //   }
-  //   logout(): Observable<any> {
-  //     return this.httpClient.get<any>(`${AppUtils.BASE_URL}` + 'api/logout', AppUtils.OPTIONS_OBJECTO);
-  //   }
+  // }
+
+  logout(): Observable<any> {
+    return this.httpClient.get<any>(`${AppUtils.BASE_URL}` + 'api/logout', AppUtils.OPTIONS_OBJECTO);
+  }
 }

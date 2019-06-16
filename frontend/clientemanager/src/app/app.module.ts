@@ -1,3 +1,4 @@
+import { InterceptorService } from './core/interceptor.service';
 import { ConfigService, configServiceInitializerFactory } from './core/config.service';
 import { APP_INITIALIZER, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -25,7 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TextMaskModule } from 'angular2-text-mask';
 
 
-import { TokenInterceptor } from './core/token.interceptor';
+
 
 import { ClienteConsultaComponent } from './components/cliente/cliente-consulta/cliente-consulta.component';
 import { ClienteEditarComponent } from './components/cliente/cliente-editar/cliente-editar.component';
@@ -78,7 +79,7 @@ import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
       deps: [ConfigService],
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
     TransferObject
   ],
   bootstrap: [AppComponent],
