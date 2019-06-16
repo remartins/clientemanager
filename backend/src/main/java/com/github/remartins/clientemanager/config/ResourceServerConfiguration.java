@@ -24,7 +24,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
-        http.logout().logoutSuccessUrl("/").permitAll()
+        http.logout()
             .invalidateHttpSession(true)
             .clearAuthentication(true)
             .and().authorizeRequests()
