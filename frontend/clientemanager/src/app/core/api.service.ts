@@ -10,6 +10,7 @@ import { HttpParams, HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Login } from './model/login';
 import { ConfigService } from './config.service';
+import { User } from './model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -78,8 +79,17 @@ export class ApiService {
 
   }
 
+  hasRole(role: string): boolean {
+    var user: User = JSON.parse(localStorage.getItem('currentUser'))
+    if (user) {
+      return user.role == role;
+    }
+    return false;
+  }
+
   isAuthenticated(): Observable<boolean> {
     return new Observable<boolean>(observer => {
+
       if (JSON.parse(localStorage.getItem('currentUser'))) {
         observer.next(true);
         observer.complete();

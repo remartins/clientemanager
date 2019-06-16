@@ -18,7 +18,8 @@
 
     <div class="row-grid">
       <button pButton type="button" label="Consultar" (click)="consultar()"></button>
-      <button pButton type="button" label="Incluir" (click)="incluir()"></button>
+      <button pButton type="button" label="Incluir" (click)="incluir()"
+      *ngIf="hasRole('ROLE_ADMIN')" ></button>
     </div>
 
   </form>
@@ -45,8 +46,14 @@
       <td>{{cliente.cpf}}</td>
       <td>{{cliente.cep}}</td>
       <td>
-        <button type="button" pButton icon="pi pi-pencil" title="Editar" (click)="editar(cliente)" style="margin-right: 5px;"></button>
-        <button type="button" pButton icon="pi pi-trash" title="Remover" (click)="excluir(cliente)"></button>
+      <button type="button" pButton icon="pi pi-search" title="Visualizar" (click)="visualizar(cliente)" style="margin-right: 5px;"
+          *ngIf="hasRole('ROLE_COMUM')" ></button>
+
+        <button type="button" pButton icon="pi pi-pencil" title="Editar" (click)="editar(cliente)" style="margin-right: 5px;"
+        *ngIf="hasRole('ROLE_ADMIN')" ></button>
+
+        <button type="button" pButton icon="pi pi-trash" title="Remover" (click)="excluir(cliente)"
+          *ngIf="hasRole('ROLE_ADMIN')" ></button>
       </td>
     </tr>
   </ng-template>

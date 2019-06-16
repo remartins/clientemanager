@@ -1,3 +1,4 @@
+import { ApiService } from './../../../core/api.service';
 import { BaseComponent } from './../../../core/base.component';
 import { Router } from '@angular/router';
 import { Cliente } from './../../../core/model/cliente';
@@ -21,12 +22,13 @@ export class ClienteConsultaComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected messageService: MessageService,
+    protected apiService: ApiService,
     private clienteService: ClienteService,
     private confirmationService: ConfirmationService,
     private router: Router,
     private transferObject:TransferObject) {
 
-    super(messageService);
+    super(messageService, apiService);
   }
 
 
@@ -75,7 +77,11 @@ export class ClienteConsultaComponent extends BaseComponent implements OnInit {
 
   public editar(cliente: Cliente) {
     this.transferObject.storage = {acao: 'editar', cliente: cliente};
-    //this.transferObject.storage = cliente;
+    this.router.navigate(['cliente-editar']);
+  }
+
+  public visualizar(cliente: Cliente) {
+    this.transferObject.storage = {acao: 'visualizar', cliente: cliente};
     this.router.navigate(['cliente-editar']);
   }
 

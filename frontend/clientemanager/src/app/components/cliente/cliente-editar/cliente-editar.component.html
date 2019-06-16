@@ -76,8 +76,8 @@
 
   <form [formGroup]="formularioTelefone" name="form">
     <p-panel header="Telefone">
-      <div class="row-grid">
 
+      <div class="row-grid" *ngIf="hasRole('ROLE_ADMIN')">
         <span>
           <label for="tipoTelefone">Tipo:</label>
           <p-dropdown id="tipoTelefone" [options]="tiposTelefone" formControlName="tipo" placeholder="Selecione"
@@ -109,14 +109,14 @@
           <tr>
             <th>Tipo</th>
             <th>Telefone</th>
-            <th>A&ccedil;&otilde;es</th>
+            <th *ngIf="hasRole('ROLE_ADMIN')">A&ccedil;&otilde;es</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-telefone>
           <tr>
             <td>{{telefone.tipo | tipoTelefone}}</td>
             <td>{{telefone.numero | telefone}}</td>
-            <td>
+            <td *ngIf="hasRole('ROLE_ADMIN')">
               <button type="button" pButton icon="pi pi-trash" title="Remover"
                 (click)="removerTelefone(telefone)"></button>
             </td>
@@ -132,7 +132,7 @@
 
   <form [formGroup]="formularioEmail" name="form">
     <p-panel header="Email">
-      <div class="row-grid">
+      <div class="row-grid" *ngIf="hasRole('ROLE_ADMIN')">
         <span>
           <label for="enderecoEmail">Endere&ccedil;o E-mail:</label>
           <input id="enderecoEmail" type="text" pInputText formControlName="endereco" autocomplete="off"
@@ -153,13 +153,13 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Endereço E-mail</th>
-            <th>A&ccedil;&otilde;es</th>
+            <th *ngIf="hasRole('ROLE_ADMIN')">A&ccedil;&otilde;es</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-email>
           <tr>
             <td>{{email.endereco}}</td>
-            <td>
+            <td *ngIf="hasRole('ROLE_ADMIN')">
               <button type="button" pButton icon="pi pi-trash" title="Remover"
                 (click)="removerEmail(email)"></button>
             </td>

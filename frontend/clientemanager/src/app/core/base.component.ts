@@ -1,3 +1,4 @@
+import { ApiService } from './api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormGroup, FormControl } from '@angular/forms';
 
@@ -7,7 +8,9 @@ import { MessageService } from './message.service';
 
 export class BaseComponent {
 
-  constructor(protected messageService: MessageService) {
+  constructor(
+    protected messageService: MessageService,
+    protected apiService: ApiService) {
   }
 
   toNumber(value: any): number {
@@ -99,6 +102,10 @@ export class BaseComponent {
 
     let index = lista.indexOf( item );
     lista.splice(index, 1);
+  }
+
+  public hasRole(role: string): boolean {
+    return this.apiService.hasRole(role);
   }
 
 }

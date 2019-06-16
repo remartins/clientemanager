@@ -13,6 +13,7 @@ import { TipoTelefone } from 'src/app/core/model/tipoTelefone';
 import { Router } from '@angular/router';
 import { TransferObject } from 'src/app/core/trasfer-object';
 import { MessageService } from 'src/app/core/message.service';
+import { ApiService } from 'src/app/core/api.service';
 
 
 
@@ -27,6 +28,7 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
   private tipoTelefonePipe: TipoTelefonePipe = new TipoTelefonePipe();
 
   public header: string = "Clientes - Incluir";
+  public disableForm: boolean = false;
 
   public formularioCliente: FormGroup;
   public formularioTelefone: FormGroup;
@@ -55,12 +57,13 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
   constructor(
     protected messageService: MessageService,
+    protected apiService: ApiService,
     private cepService: CepService,
     private clienteService: ClienteService,
     private router: Router,
     private transferObject:TransferObject) {
 
-      super(messageService);
+      super(messageService, apiService);
     }
 
   ngOnInit() {
@@ -91,7 +94,8 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
 
     if (this.transferObject.storage) {
-      if (this.transferObject.storage.acao && this.transferObject.storage.acao == 'editar') {
+      if (this.transferObject.storage.acao
+        && (this.transferObject.storage.acao == 'editar' || this.transferObject.storage.acao == 'visualizar')) {
 
         this.header = "Clientes - Editar";
 
@@ -108,6 +112,10 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
         this.emails = cliente.emails;
         this.telefones = cliente.telefones;
+
+        if (this.transferObject.storage.acao == 'visualizar') {
+          this.formularioCliente.disable();
+        }
       }
     }
 
