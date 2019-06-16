@@ -25,6 +25,8 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
   private tipoTelefonePipe: TipoTelefonePipe = new TipoTelefonePipe();
 
+  public header: string = "Clientes - Incluir";
+
   public formularioCliente: FormGroup;
   public formularioTelefone: FormGroup;
   public formularioEmail: FormGroup;
@@ -89,6 +91,9 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
     if (this.transferObject.storage) {
       if (this.transferObject.storage.acao && this.transferObject.storage.acao == 'editar') {
+
+        this.header = "Clientes - Editar";
+
         var cliente: Cliente = this.transferObject.storage.cliente;
         this.formularioCliente.controls['id'].setValue(cliente.id);
         this.formularioCliente.controls['nome'].setValue(cliente.nome);
