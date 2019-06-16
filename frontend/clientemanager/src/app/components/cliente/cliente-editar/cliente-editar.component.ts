@@ -10,6 +10,9 @@ import { Component, OnInit } from '@angular/core';
 import { TipoTelefonePipe } from 'src/app/core/pipes/tipo-telefone.pipe';
 import { TipoTelefone } from 'src/app/core/model/tipoTelefone';
 
+import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-cliente-editar',
   templateUrl: './cliente-editar.component.html',
@@ -46,10 +49,11 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
   public placeholderTel = this.placeholderTelNormal;
 
   constructor(
+    protected messageService: MessageService,
     private cepService: CepService,
-    private messageService: MessageService,
-    private clienteService: ClienteService) {
-      super();
+    private clienteService: ClienteService,
+    private router: Router) {
+      super(messageService);
     }
 
   ngOnInit() {
@@ -178,12 +182,6 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
         this.messageService.add({severity:'success', summary: 'Sucesso', detail:'Registro incluído com sucesso'});
 
-        // if (res.erro) {
-        //   this.messageService.add({severity:'warn', summary: 'Erro ao buscar CEP', detail:'CEP não encontrado'});
-        // } else {
-        //   this.formularioCliente.controls['logradouro'].setValue(res.logradouro);
-        // }
-
       }, err => {
         this.messageService.add({severity:'error', summary: 'Erro', detail:'Erro ao incluir'});
       });
@@ -191,6 +189,10 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
     } else {
       this.validateAllFormFields(this.formularioCliente);
     }
+  }
+
+  public voltar(): void {
+    this.router.navigate(['/cliente-consulta']);
   }
 
 }

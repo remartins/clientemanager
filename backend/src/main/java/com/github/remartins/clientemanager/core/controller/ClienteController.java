@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +32,11 @@ public class ClienteController {
 	@Autowired
 	private ClienteService service;
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping(value="/teste")
-    public String listUser(){
-		
-		service.testeInsert();
-        return "testando";
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COMUM')")
+    @GetMapping()
+    public ResponseEntity<List<Cliente>> consultarTodas(){
+		return ResponseEntity.ok().body(service.consultarTodos());
     }
 	
 	
@@ -53,10 +53,17 @@ public class ClienteController {
     }
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping()
     public ResponseEntity<Cliente> consultarClientesPorNome(@RequestBody Cliente cliente){
 		service.incluir(cliente);
 		return ResponseEntity.ok().body(cliente);
+    }
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping(value="/{id}")
+    public ResponseEntity<List<Cliente>> consultarClientesPorNome(@PathVariable Long id){
+		service.excluir(id);
+		return ResponseEntity.ok().build();
     }
 
 }

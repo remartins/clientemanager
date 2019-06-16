@@ -33,15 +33,20 @@ export class ClienteService {
   }
 
   public consultarClientePorNome(nome?: string): Observable<any> {
-
     let httpParams: HttpParams = new HttpParams().set('nome', nome);
-
     return this.http.get(this.url + "consultar-nome/" + nome, this.options());
+  }
 
+  public consultarTodos(): Observable<any> {
+    return this.http.get(this.url, this.options());
   }
 
   public incluir(cliente: Cliente): Observable<any> {
     return this.http.post(this.url, cliente, this.options());
+  }
+
+  public excluir(id: number): Observable<any> {
+    return this.http.delete(this.url + id, this.options());
   }
 
 

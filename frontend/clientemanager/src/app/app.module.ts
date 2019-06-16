@@ -16,6 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -52,6 +53,7 @@ import { FieldMessageErrorComponent } from './components/field-message-error/fie
     ButtonModule,
     TableModule,
     DropdownModule,
+    ConfirmDialogModule,
     ToastModule,
     AppRoutingModule,
     ReactiveFormsModule,

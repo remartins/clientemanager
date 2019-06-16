@@ -19,6 +19,8 @@ import com.github.remartins.clientemanager.core.model.Cliente;
 import com.github.remartins.clientemanager.core.model.Email;
 import com.github.remartins.clientemanager.core.model.Telefone;
 import com.github.remartins.clientemanager.core.repository.ClienteRepository;
+import com.github.remartins.clientemanager.core.repository.EmailRepository;
+import com.github.remartins.clientemanager.core.repository.TelefoneRepository;
 
 import lombok.extern.java.Log;
 
@@ -37,6 +39,16 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 	
+	@Autowired
+	private EmailRepository emailRepository;
+	
+	@Autowired
+	private TelefoneRepository telefoneRepository;
+	
+	
+	public List<Cliente> consultarTodos() {
+		return repository.findAll();
+	}
 	
 	public List<Cliente> consultarClientesPorNome(Optional<String> nome) {
 		if (nome.isPresent()) {
@@ -50,32 +62,23 @@ public class ClienteService {
 		repository.save(cliente);
 	}
 	
-	public void testeInsert() {
-		Cliente cliente = new Cliente();
-		cliente.setNome("cliente 1");
-		cliente.setBairro("meu bairro");
-		cliente.setCpf(11121241241L);
-		cliente.setCep(74523550L);
-		cliente.setCidade("jussara");
-		cliente.setComplemento("ccc");
-		cliente.setLogradouro("rua 1");
-		cliente.setUf("go");
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void excluir(Long id) {
+		Cliente cliente = repository.findById(id).get();
+
+		for (Email e : cliente.getEmails()) {
+			emailRepository.delete(e);
+		}
 		
-		Telefone telefone = new Telefone();
-		telefone.setNumero(33731505L);
-		telefone.setTipo(TipoTelefone.COMERCIAL.getValor());
-		cliente.setTelefones(new ArrayList<Telefone>());
-		cliente.getTelefones().add(telefone);
+		for (Telefone t : cliente.getTelefones()) {
+			telefoneRepository.delete(t);
+		}
 		
-		Email email = new Email();
-		email.setEndereco("jose@gmai.com");
-		cliente.setEmails(new ArrayList<Email>());
-		cliente.getEmails().add(email);
-		
-		repository.save(cliente);
-		
-		log.info("gravou o cliente: " + cliente.getId());
-		
+//		emailRepository.deleteInBatch(cliente.getEmails());
+//		telefoneRepository.deleteInBatch(cliente.getTelefones());
+		repository.delete(cliente);
 	}
+	
+
 
 }
