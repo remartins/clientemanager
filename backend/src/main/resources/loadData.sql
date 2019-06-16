@@ -9,7 +9,7 @@
 --drop table if exists SCM.AU_TELEFONE;
 --drop table if exists SCM.AU_AUDITORIA;
 
-/*CREATE SCHEMA "SCM" ;*/
+CREATE SCHEMA "SCM" ;
 
 /*==============================================================*/
 /* Table: TB_CLIENTE                                            */

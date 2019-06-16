@@ -17,14 +17,14 @@ export class InterceptorService implements HttpInterceptor {
               private router: Router,
               private messageService: MessageService) { }
 
-  private isRequestLogin(request: HttpRequest<any>) {
-    return request.url === "http://localhost:8080/oauth/token";
+  private isRequestIgnore(request: HttpRequest<any>) {
+    return request.url === "http://localhost:8080/oauth/token" || request.url.substring(0,20) === "http://viacep.com.br";
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token: string = localStorage.getItem('accessToken');
 
-    if (token && !this.isRequestLogin(request)) {
+    if (token && !this.isRequestIgnore(request)) {
       request = request.clone({ headers: request.headers.set('Authorization', 'Bearer ' + token) });
     }
 
