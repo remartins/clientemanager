@@ -2,7 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, FormGroup, FormControl } from '@angular/forms';
 
 import { isString, isArray, isDate, isNumber } from 'util';
-import { MessageService } from 'primeng/api';
+import { MessageService } from './message.service';
+
 
 export class BaseComponent {
 
@@ -83,15 +84,15 @@ export class BaseComponent {
   }
 
   protected showMessageWarn(mensagem: string) {
-    this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: mensagem });
+    this.messageService.showWarning(mensagem);
   }
 
   protected showMessageError(mensagem: string) {
-    this.messageService.add({ severity: 'error', summary: 'Erro', detail: mensagem });
+    this.messageService.showError(mensagem);
   }
 
   protected showMessageSucess(mensagem: string) {
-    this.messageService.add({severity:'success', summary: 'Sucesso', detail: mensagem});
+    this.messageService.showSuccess(mensagem);
   }
 
   protected removerItemLista(item:any, lista:any[]) {

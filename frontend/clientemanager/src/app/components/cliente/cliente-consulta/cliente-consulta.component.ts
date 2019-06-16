@@ -4,14 +4,15 @@ import { Cliente } from './../../../core/model/cliente';
 import { ClienteService } from './../../../core/cliente.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { TransferObject } from 'src/app/core/trasfer-object';
+import { MessageService } from 'src/app/core/message.service';
 
 @Component({
   selector: 'app-cliente-consulta',
   templateUrl: './cliente-consulta.component.html',
   styleUrls: ['./cliente-consulta.component.scss'],
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService]
 })
 export class ClienteConsultaComponent extends BaseComponent implements OnInit {
 

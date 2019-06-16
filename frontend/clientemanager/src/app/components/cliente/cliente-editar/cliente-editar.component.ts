@@ -3,7 +3,7 @@ import { Cliente } from './../../../core/model/cliente';
 import { Email } from './../../../core/model/email';
 import { BaseComponent } from './../../../core/base.component';
 import { Telefone } from './../../../core/model/telefone';
-import { MessageService } from 'primeng/api';
+
 import { CepService } from './../../../core/cep.service';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -12,6 +12,7 @@ import { TipoTelefone } from 'src/app/core/model/tipoTelefone';
 
 import { Router } from '@angular/router';
 import { TransferObject } from 'src/app/core/trasfer-object';
+import { MessageService } from 'src/app/core/message.service';
 
 
 
@@ -19,7 +20,7 @@ import { TransferObject } from 'src/app/core/trasfer-object';
   selector: 'app-cliente-editar',
   templateUrl: './cliente-editar.component.html',
   styleUrls: ['./cliente-editar.component.scss'],
-  providers: [MessageService]
+
 })
 export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
@@ -123,7 +124,8 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
         console.log(res);
 
         if (res.erro) {
-          this.messageService.add({severity:'warn', summary: 'Erro ao buscar CEP', detail:'CEP não encontrado'});
+          this.showMessageWarn
+          this.showMessageWarn('CEP não encontrado');
         } else {
           this.formularioCliente.controls['logradouro'].setValue(res.logradouro);
           this.formularioCliente.controls['bairro'].setValue(res.bairro);
@@ -132,7 +134,7 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
         }
 
       }, err => {
-        this.messageService.add({severity:'warn', summary: 'Erro ao buscar CEP', detail:'CEP não encontrado'});
+        this.showMessageWarn('CEP não encontrado');
       });
 
     }
@@ -185,12 +187,12 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
     if (this.formularioCliente.valid) {
 
       if (this.telefones.length == 0) {
-        this.messageService.add({severity:'warn', summary: 'Atenção', detail:'Informe ao menos um Telefone'});
+        this.showMessageWarn('Informe ao menos um Telefone');
         return;
       }
 
       if (this.emails.length == 0) {
-        this.messageService.add({severity:'warn', summary: 'Atenção', detail:'Informe ao menos um E-mail'});
+        this.showMessageWarn('Informe ao menos um E-mail');
         return;
       }
 
@@ -209,11 +211,11 @@ export class ClienteEditarComponent extends BaseComponent implements OnInit {
 
       this.clienteService.incluir(cliente).subscribe(res => {
 
-        this.messageService.add({severity:'success', summary: 'Sucesso', detail:'Registro incluído com sucesso'});
+        this.showMessageSucess('Registro salvo com sucesso')
         this.limparFormulario();
 
       }, err => {
-        this.messageService.add({severity:'error', summary: 'Erro', detail:'Erro ao incluir'});
+        this.showMessageError('Erro ao excluir registro')
       });
 
     } else {
