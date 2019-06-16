@@ -47,7 +47,8 @@ export class InterceptorService implements HttpInterceptor {
               return this.handleErrorGeneral(error);
             case 403:
               console.log('error 403');
-              return this.getAccessToken(request, next);
+              //return this.getAccessToken(request, next);
+              return this.router.navigate(['login']);
             case 0:
              console.log('error 0');
              localStorage.removeItem('accessToken');

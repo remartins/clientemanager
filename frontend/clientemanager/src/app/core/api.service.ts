@@ -135,6 +135,7 @@ export class ApiService {
   // }
 
   logout(): Observable<any> {
-    return this.httpClient.get<any>(`${AppUtils.BASE_URL}` + 'api/logout', AppUtils.OPTIONS_OBJECTO);
+    //localStorage.clear();
+    return this.httpClient.post<any>(`${AppUtils.BASE_URL}` + 'logout',null, AppUtils.OPTIONS_OBJECTO);
   }
 }

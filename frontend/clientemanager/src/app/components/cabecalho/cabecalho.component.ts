@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { ApiService } from 'src/app/core/api.service';
 
 @Component({
   selector: 'app-cabecalho',
@@ -10,9 +11,19 @@ export class CabecalhoComponent implements OnInit {
 
   items: MenuItem[];
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit() {
+  }
+
+  logout() {
+    this.apiService.logout().subscribe(res => {
+
+      console.log("logout");
+
+    }, err => {
+      console.log(err);
+    });
   }
 
 }
