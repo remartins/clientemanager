@@ -35,6 +35,8 @@ import { TelefonePipe } from './core/pipes/telefone.pipe';
 import { FieldMessageErrorComponent } from './components/field-message-error/field-message-error.component';
 import { TransferObject } from './core/trasfer-object';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
+import { ToastrModule } from 'ngx-toastr';
+import { MessageService } from './core/message.service';
 
 
 
@@ -66,7 +68,11 @@ import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    TextMaskModule
+    TextMaskModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      positionClass: 'toast-top-center'
+    })
   ],
   exports: [
     TipoTelefonePipe,
@@ -80,7 +86,8 @@ import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
       multi: true
     },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true },
-    TransferObject
+    TransferObject,
+    MessageService
   ],
   bootstrap: [AppComponent],
   schemas: [
