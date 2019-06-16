@@ -103,7 +103,7 @@ export class InterceptorService implements HttpInterceptor {
       return this.router.navigate(['login']);
     }
     //return EmptyObservable.create();
-    return this.router.navigate(['login']);
-    //return empty();
+    //return this.router.navigate(['login']);
+    return empty();
   }
 }
